@@ -18,6 +18,10 @@ spec:
       {{ if .Values.graylog.provisioner.useGraylogServiceAccount }}
       serviceAccountName: {{ template "graylog.serviceAccountName" . }}
       {{ end }}
+      {{- if .Values.graylog.provisioner.nodeSelector }}
+      nodeSelector:
+        {{ toYaml .Values.graylog.provisioner.nodeSelector | indent 8 }}
+      {{- end }}
       containers:
       - name: {{ template "graylog.fullname" . }}-provisioner-job
         image: "alpine"
